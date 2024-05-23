@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PROGPOE
-//__________________________________________Part 2 _____________________________________________
+//_________________________________________Part 2 _______________________________________________
 {
     public class
         CalorieExceededEventArgs : EventArgs
