@@ -1,36 +1,105 @@
-﻿using PROGPOE;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-/*_____________________________________references_______________________________________
-* C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/
-* C# programming examples: https://www.dotnetperls.com/
-* Console application examples in C#: https://www.csharp-console-examples.com/
-* Object-oriented programming in C#: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming
-* Code Helper: https://chat.openai.com/
-*/
+using System.Runtime.CompilerServices;
+
 namespace PROGPOE
 {
-    //_________________________________________PART1________________________________________
-    /// Represents a recipe, including its name, ingredients, and steps.
-    public class Recipe
+    public class Recipe : INotifyPropertyChanged
     {
-        /// The name of the recipe.
-        public string Name { get; set; }
-        /// The ingredients for the recipe.
-        public List<Ingredient> Ingredients { get; set; }
-        /// The steps to prepare the recipe.
-        public List<string> Steps { get; set; }
-        /// The original quantities of the ingredients.
-        public List<double> OriginalIngredientQuantities { get; set; }
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
 
-        //_________________________________________PART1________________________________________
+        private ObservableCollection<Ingredient> _ingredients;
+        public ObservableCollection<Ingredient> Ingredients
+        {
+            get { return _ingredients; }
+            set
+            {
+                _ingredients = value;
+                OnPropertyChanged();
+                CalculateCalories();
+            }
+        }
 
-        //_________________________________________Part 2 ______________________________________
+        private ObservableCollection<string> _steps;
+        public ObservableCollection<string> Steps
+        {
+            get { return _steps; }
+            set
+            {
+                _steps = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public int Calories { get; set; }
-        public List<string> FoodGroups { get; set; }
+        private int _calories;
+        public int Calories
+        {
+            get { return _calories; }
+            set
+            {
+                _calories = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<string> _foodGroups;
+        public ObservableCollection<string> FoodGroups
+        {
+            get { return _foodGroups; }
+            set
+            {
+                _foodGroups = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<double> _originalIngredientQuantities;
+        public ObservableCollection<double> OriginalIngredientQuantities
+        {
+            get { return _originalIngredientQuantities; }
+            set
+            {
+                _originalIngredientQuantities = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Recipe()
+        {
+            Ingredients = new ObservableCollection<Ingredient>();
+            Steps = new ObservableCollection<string>();
+            FoodGroups = new ObservableCollection<string>();
+            OriginalIngredientQuantities = new ObservableCollection<double>();
+        }
+
+        public void CalculateCalories()
+        {
+            Calories = Ingredients.Sum(i => i.Calories);
+        }
+
+        public void ResetIngredientQuantities()
+        {
+            for (int i = 0; i < Ingredients.Count; i++)
+            {
+                Ingredients[i].Quantity = OriginalIngredientQuantities[i];
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

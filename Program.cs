@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic; // Part 2: Added for using List<T>
 using System.Linq; // Part 2: Added for using LINQ methods like OrderBy and Sum
-
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 /*_____________________________________references_______________________________________
 * C# documentation: https://docs.microsoft.com/en-us/dotnet/csharp/
@@ -17,6 +17,16 @@ namespace PROGPOE
 {
     class Program
     {
+        [STAThread]
+        static void Main()
+        {
+            Application app = new Application();
+            app.StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
+            app.Run();
+        }
+    }
+}
+        /*
         static void Main(string[] args)
         {
             RecipeApp recipeApp = new RecipeApp();
@@ -24,14 +34,18 @@ namespace PROGPOE
 
             while (true)
             {
+                Console.BackgroundColor = ConsoleColor.Black; // Set the background color to black
+                Console.ForegroundColor = ConsoleColor.White; // Set the text color to white
                 Console.WriteLine("Recipe App Menu:");
+                Console.ForegroundColor = ConsoleColor.Yellow; // Set the text color to yellow for menu options
                 Console.WriteLine("1. Enter a new recipe");
-                Console.WriteLine("2. Display recipe list"); // Part 2: Added option to display recipe list
-                Console.WriteLine("3. Select a recipe"); // Part 2: Added option to select a recipe
+                Console.WriteLine("2. Display recipe list");
+                Console.WriteLine("3. Select a recipe");
                 Console.WriteLine("4. Scale recipe");
                 Console.WriteLine("5. Reset recipe");
                 Console.WriteLine("6. Clear recipe");
                 Console.WriteLine("7. Exit");
+                Console.ForegroundColor = ConsoleColor.White; // Set the text color back to white
                 Console.Write("Enter your choice (1-7): ");
 
                 int choice = int.Parse(Console.ReadLine());
@@ -42,14 +56,18 @@ namespace PROGPOE
                         recipeApp.GetRecipeDetails();
                         break;
                     case 2:
-                        recipeApp.DisplayRecipeList(); // Part 2: Display the list of recipes
+                        Console.ForegroundColor = ConsoleColor.Cyan; // Set the text color to cyan for displaying recipe list
+                        recipeApp.DisplayRecipeList();
+                        Console.ForegroundColor = ConsoleColor.White; // Set the text color back to white
                         break;
                     case 3:
+                        Console.ForegroundColor = ConsoleColor.Green; // Set the text color to green for user input
                         Console.Write("Enter the recipe name: ");
+                        Console.ForegroundColor = ConsoleColor.White; // Set the text color back to white
                         string recipeName = Console.ReadLine();
-                        recipeApp.DisplayRecipe(recipeName); // Part 2: Display a specific recipe by name
-                        recipeApp.NotifyExceedingCalories(recipeName); // Part 2: Notify if the recipe exceeds 300 calories
-                        break;
+                        recipeApp.DisplayRecipe(recipeName);
+                        recipeApp.NotifyExceedingCalories(recipeName);
+                        break;        
                     case 4:
                         Console.Write("Enter the recipe name: ");
                         recipeName = Console.ReadLine();
@@ -85,3 +103,4 @@ namespace PROGPOE
         }
     }
 }
+        */

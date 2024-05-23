@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -26,10 +27,12 @@ namespace PROGPOE
             int numIngredients = int.Parse(Console.ReadLine());
 
             // Part 2: Changed from arrays to generic collections
-            newRecipe.Ingredients = new List<Ingredient>();
-            newRecipe.OriginalIngredientQuantities = new List<double>();
+           
+            newRecipe.Ingredients = new ObservableCollection<Ingredient>(); // Changed to ObservableCollection<Ingredient>
+            newRecipe.OriginalIngredientQuantities = new ObservableCollection<double>(); // Changed to ObservableCollection<double>
+            newRecipe.FoodGroups = new ObservableCollection<string>(); // 
             // Part 2: Added food groups list
-            newRecipe.FoodGroups = new List<string>();
+            newRecipe.FoodGroups = new ObservableCollection<string>();
 
             for (int i = 0; i < numIngredients; i++)
             {
@@ -73,7 +76,7 @@ namespace PROGPOE
             int numSteps = int.Parse(Console.ReadLine());
 
             // Part 2: Changed from array to generic collection
-            newRecipe.Steps = new List<string>();
+            newRecipe.Steps = new ObservableCollection<string>();
 
             // Part 2: Modified to handle multi-line step
             Console.ForegroundColor = ConsoleColor.Yellow;
